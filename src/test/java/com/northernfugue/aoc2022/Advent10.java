@@ -17,15 +17,12 @@ public class Advent10 {
   }
 
   static class Device {
-    int t = 0, x = 1, signal = 0, col;
+    int x = 1, t, c, s;
 
     void tick() {
-      if (0 == (col = t % 40)) {
-        System.out.println();
-      }
-      System.out.print(((x - 1) <= col && col <= (x + 1)) ? '#' : '.');
+      System.out.format("%s%s", (0 == (c = t % 40)) ? "\n" : "", Math.abs(x - c) < 2 ? '#' : '.');
       if ((++t) % 40 == 20) {
-        signal += (t * x);
+        s += (t * x);
       }
     }
 
@@ -39,7 +36,7 @@ public class Advent10 {
           }
         }
       }
-      return signal;
+      return s;
     }
   }
 }
