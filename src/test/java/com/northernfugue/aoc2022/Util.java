@@ -1,5 +1,7 @@
 package com.northernfugue.aoc2022;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
@@ -11,14 +13,19 @@ public class Util {
     // utility
   }
 
-  static Map<String, Path> inputs = new HashMap<>();
+  private static final Map<String, Path> inputs = new HashMap<>();
 
-  public static Path input(String s) throws Exception {
+  public static Path input(String s) throws IOException {
     if (!inputs.containsKey(s)) {
-      Path p = Paths.get(Util.class.getClassLoader().getResource(s).toURI());
+      Path p;
+      try {
+        p = Paths.get(Util.class.getClassLoader().getResource(s).toURI());
+      } catch (URISyntaxException e) {
+        throw new IOException("Error getting Path for resource: " + s, e);
+      }
       inputs.put(s, p);
       return p;
-    }else {
+    } else {
       return inputs.get(s);
     }
   }
