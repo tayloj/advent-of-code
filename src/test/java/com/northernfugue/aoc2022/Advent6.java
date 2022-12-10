@@ -8,15 +8,18 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Advent6 {
 
+
+  private final Set<Character> window = new HashSet<>();
 
   @Test
   public void day6() throws Exception {
@@ -27,18 +30,13 @@ public class Advent6 {
   }
 
   public List<Integer> day6(int wLength, Path input) throws IOException {
-    Set<Character> window = new HashSet<>();
-    List<Integer> result = new ArrayList<>();
-    try (BufferedReader reader = Files.newBufferedReader(input)) {
-      String line;
-      while (null != (line = reader.readLine())) {
-        result.add(findMarker(line, wLength, window));
-      }
+    try (BufferedReader reader = Files.newBufferedReader(input);
+        Stream<String> lines = reader.lines()) {
+      return lines.map(line -> findMarker(line, wLength)).collect(Collectors.toList());
     }
-    return result;
   }
 
-  synchronized public int findMarker(String line, int wLength, Set<Character> window) {
+  synchronized public int findMarker(String line, int wLength) {
     outer: for (int b = 0, e = wLength, n = line.length() + 1; e < n; b++, e++) {
       window.clear();
       for (int i = b; i < e; i++) {
