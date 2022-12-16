@@ -97,27 +97,26 @@ public class Advent14 extends AbstractDay {
     }
 
     // drop sand
-    int[][] dirs = {{1, 0}, {1, -1}, {1, 1}};
-    int grains = 0;
+    int grains = 0, sand[], dirs[][] = {{1, 0}, {1, -1}, {1, 1}};
     try {
-      for (int[] sand = Arrays.copyOf(origin, 2); 'o' != at(grid, sand); sand =
-          Arrays.copyOf(origin, 2)) {
-        freefall: while (true) {
-          for (int[] dir : dirs) {
-            if ('.' == at(grid, plus(sand, dir))) {
-              inc(sand, dir);
-              continue freefall;
-            }
+      while ('o' != at(grid, sand = copy(origin))) {
+        for (int i = 0, n = dirs.length; i < n; i++) {
+          if ('.' == at(grid, plus(sand, dirs[i]))) {
+            inc(sand, dirs[i]);
+            i = -1; // "restart" the for loop
           }
-          grid[sand[0]][sand[1]] = 'o';
-          grains++;
-          break; // outer while only happens once per grain
         }
+        grid[sand[0]][sand[1]] = 'o';
+        grains++;
       }
     } catch (ArrayIndexOutOfBoundsException e) {
       // OK, we're done
     }
     return grains;
+  }
+
+  int[] copy(int[] x) {
+    return Arrays.copyOf(x, x.length);
   }
 
   private char at(char[][] grid, int[] p) {
