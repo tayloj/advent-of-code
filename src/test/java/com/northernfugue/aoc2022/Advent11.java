@@ -25,9 +25,6 @@ public class Advent11 {
 
   @Test(timeout = 60_000)
   public void day11() throws IOException {
-    assertEquals(10605L, day11(Util.input("day11/sample.txt"), 20, 3));
-    assertEquals(2713310158L, day11(Util.input("day11/sample.txt"), 10_000, 1));
-
     assertEquals(110220L, day11(Util.input("day11/input.txt"), 20, 3));
     assertEquals(19457438264L, day11(Util.input("day11/input.txt"), 10_000, 1));
   }
