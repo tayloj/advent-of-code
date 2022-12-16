@@ -78,9 +78,9 @@ public class Advent13 {
       boolean hasLeft = ll.hasNext(), hasRight = rr.hasNext();
       if (!hasLeft && !hasRight) {
         return 0;
-      } else if (!hasLeft && hasRight) {
+      } else if (!hasLeft) {
         return -1;
-      } else if (hasLeft && !hasRight) {
+      } else if (!hasRight) {
         return 1;
       } else {
         int cmp = compare(ll.next(), rr.next());
